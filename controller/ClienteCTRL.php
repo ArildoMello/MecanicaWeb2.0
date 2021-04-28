@@ -30,8 +30,6 @@ class ClienteCTRL{
        return $dao->ConsultarCliente($nome_pesquisa);
  
      }  
-     
-
-   
+        
     
 }

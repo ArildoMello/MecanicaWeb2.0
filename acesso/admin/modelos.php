@@ -1,8 +1,7 @@
 <?php
 require_once '../../controller/ModeloCTRL.php';
-require_once '../../vo/ModeloVO.php';
 require_once '../../controller/MarcaCTRL.php';
-require_once '../../vo/MarcaVO.php';
+require_once '../../vo/ModeloVO.php';
 
 $ctrlMarcar = new MarcaCTRL();
 $ctrl = new   ModeloCTRL;
@@ -17,8 +16,8 @@ if (isset($_POST['btnCadastrar'])) {
     $id = $_POST['id_item'];
     $ret = $ctrl->ExcluirModelo($id);
 }
-$modelos = $ctrl->ConsultarModelo();
 $marcas = $ctrlMarcar->ConsultarMarca();
+$modelos = $ctrl->ConsultarModelo();
 ?>
 
 <!DOCTYPE html>
@@ -128,10 +127,10 @@ $marcas = $ctrlMarcar->ConsultarMarca();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php for ($id = 0; $i < count($modelos); $i++) { ?>
+                                        <?php for ($i = 0; $i < count($modelos); $i++) { ?>
                                                 <tr>
                                                     <td><?= $modelos[$i]['nome_marca'] ?></td>
-                                                    <td><?= $modelos[$i]['nome_modelo'] ?></td>
+                                                    <td><?= $modelos [$i]['nome_modelo'] ?></td>
                                                     <td>
                                                         <a href="#" class="btn btn-warning btn-xs">Alterar</a>
                                                         <a href="#" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-excluir" onclick="CarregarModalExcluir('<?= $modelos[$i]['id_modelo'] ?>','<?= $modelos[$i]['nome_modelo'] ?>')">Excluir</a>

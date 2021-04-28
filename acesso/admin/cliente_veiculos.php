@@ -1,3 +1,43 @@
+<?php
+require_once '../../controller/ModeloCTRL.php';
+require_once '../../vo/ModeloVO.php';
+require_once '../../controller/VeiculoCTRL.php';
+require_once '../../vo/VeiculoVO.php';
+
+$ctrlModelo = new ModeloCTRL();
+$ctrl = new VeiculoCTRL();
+
+$cod = '';
+$cod_veiculo = '';
+$modelo = '';
+$nome = '';
+$placa = '';
+$cor = '';
+
+if (isset($_GET['cod']) && isset($_GET['nome'])) {
+    $cod = $_GET['cod'];
+    $nome = $_GET['nome'];
+}
+if (isset($_POST['btnCadastrar'])) {
+    $cod = $_POST['cod'];
+    $cod_veiculo = $_POST['cod_veiculo'];
+    $nome = $_POST['nome'];
+    $modelo = $_POST['modelo'];
+    $placa = $_POST['placa'];
+    $cor = $_POST['cor'];
+
+    $vo = new VeiculoVO();
+    $vo->setPlaca($placa);
+    $vo->setCor($cor);
+    $vo->setIdCliente($cod);
+    $vo->setidModelo($modelo);
+    $ret = $ctrl->CadastrarVeiculo($vo);
+  }
+
+
+$modelos = $ctrlModelo->ConsultarModelo();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -50,11 +90,13 @@
                     </div>
                     <div class="card-body">
                         <form method="POST" action="cliente_veiculos.php">
+                            <input type="hidden" name="cod" value="<?= $cod ?>" />
+                            <input type="hidden" name="cod_veiculo" value="<?= $cod_veiculo ?>" />
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Nome</label>
-                                        <input type="text" readonly class="form-control" id="nome" name="nome">
+                                        <input type="text" readonly class="form-control" id="nome" name="nome"value="<?= $nome ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -62,6 +104,9 @@
                                         <label>Marca/Modelo</label>
                                         <select class="form-control" name="modelo" id="modelo">
                                             <option value="">Selecione</option>
+                                            <?php for ($i = 0; $i < count($modelos); $i++) { ?>
+                                                <option value="<?= $modelos[$i]['id_modelo'] ?>" <?= $modelos == $modelos[$i]['id_modelo'] ? 'selected' : '' ?>><?= $modelos[$i]['nome_marca'] . ' / ' . $modelos[$i]['nome_modelo'] ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -70,13 +115,13 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Placa</label>
-                                        <input type="text" class="form-control" id="placa" placeholder="digite aqui.." name="placa">
+                                        <input type="text" class="form-control" id="placa" placeholder="digite aqui.." name="placa"value="<?= $placa ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Cor</label>
-                                        <input type="text" class="form-control" id="cor" placeholder="digite aqui.." name="cor">
+                                        <input type="text" class="form-control" id="cor" placeholder="digite aqui.." name="cor"value="<?= $cor ?>"/>
                                     </div>
                                 </div>
                             </div>

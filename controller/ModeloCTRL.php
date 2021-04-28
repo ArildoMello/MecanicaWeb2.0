@@ -6,7 +6,6 @@ define('CadastrarModelo', 'CadastrarModelo');
 define('ExcluirModelo', 'ExcluirModelo');
 class ModeloCTRL
 {
-
     public function CadastrarModelo(ModeloVO $vo)
     {
         if (
